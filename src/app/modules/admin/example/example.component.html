@@ -1,0 +1,72 @@
+<div class="flex min-w-0 flex-auto flex-col" *transloco="let t">
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+        <!-- CONTENT GOES HERE -->
+        <div
+            class="h-400 max-h-400 min-h-400 rounded-2xl border-2 border-dashed border-gray-300"
+        >
+            <form class="grid grid-cols-3 gap-2" [formGroup]="myForm">
+                <div>
+                    <ara-autocomplete
+                        [label]="t('welcome-back')"
+                        [items]="options"
+                        [required]="true"
+                        [isDisabled]="true"
+                        [isUseForm]="false"
+                        [value]="value"
+                        [isUseClear]="true"
+                        (onChange)="handleChangeValue($event)"
+                        (onClear)="handleClearValue()"
+                        label="Choose an option"
+                    ></ara-autocomplete>
+                    <div class="formfield-block"></div>
+                </div>
+
+                <div>
+                    <ara-autocomplete
+                        [items]="options"
+                        [required]="true"
+                        [isDisabled]="false"
+                        [isUseForm]="true"
+                        [value]="'option 1'"
+                        [formGroup]="myForm"
+                        formControlName="search2"
+                    ></ara-autocomplete>
+                    <div class="formfield-block">
+                        @if (getErrorMessage('search2')) {
+                            <mat-error class="required-color">{{
+                                getErrorMessage('search2')
+                            }}</mat-error>
+                        }
+                        @if (!getErrorMessage('search2')) {
+                            <mat-error></mat-error>
+                        }
+                    </div>
+                </div>
+                <div>
+                    <ara-input-text
+                        [type]="'text'"
+                        [placeholder]="'input'"
+                        [required]="true"
+                        [label]="'xinchao'"
+                        [isDisable]="true"
+                        [isUseForm]="false"
+                        [isUseClear]="true"
+                        [value]="'1234'"
+                        (onChange)="handleInputChange($event)"
+                    >
+                    </ara-input-text>
+                </div>
+            </form>
+            <button
+                mat-flat-button
+                (click)="onSubmit()"
+                [disabled]="!myForm.valid"
+            >
+                Submit
+            </button>
+
+            <div>{{ t('welcome-back') }}</div>
+        </div>
+    </div>
+</div>

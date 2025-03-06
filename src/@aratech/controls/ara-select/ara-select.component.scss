@@ -1,0 +1,19 @@
+.no-hint {
+	margin-bottom: -1.27em;
+}
+
+.highlight-form {
+	::ng-deep {
+		.mat-mdc-text-field-wrapper {
+			border: 1px solid red !important;
+		}
+	}
+}
+
+.highlight-input::placeholder {
+	color: red !important;
+}
+
+.highlight-input::first-line {
+	border: 1px solid red;
+}

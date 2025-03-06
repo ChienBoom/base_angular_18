@@ -1,0 +1,31 @@
+<!-- <div class="flex items-center text-md" *ngIf="label && !labelForm">{{ label }}</div> -->
+<mat-form-field
+	class="w-full form-control"
+	[ngClass]="{
+		'fuse-mat-dense fuse-mat-rounded': isFuseStyle,
+		'no-hint': isRemoveHint,
+		'highlight-form': isHighlight
+	}"
+>
+	<mat-label *ngIf="label || labelForm">{{ label }}</mat-label>
+	<mat-select [(value)]="value" [disabled]="disabled" (selectionChange)="optionSelected($event)" [multiple]="multiple">
+		<mat-option *ngFor="let item of items" [value]="item[valueField]" class="opt-item"
+			><ng-template #defaultOptionTemplate>
+				<div *ngIf="displayField.length > 1">
+					<p>{{ item[displayField[0]] }}</p>
+					<small
+						><i>{{ item[displayField[1]] }}</i></small
+					>
+				</div>
+				<div *ngIf="displayField.length === 1">
+					<p>{{ item[displayField[0]] }}</p>
+				</div>
+			</ng-template>
+			<ng-container
+				[ngTemplateOutlet]="dynamicOptionTemplate || defaultOptionTemplate"
+				[ngTemplateOutletContext]="{ $implicit: item }"
+			></ng-container>
+		</mat-option>
+	</mat-select>
+</mat-form-field>
+

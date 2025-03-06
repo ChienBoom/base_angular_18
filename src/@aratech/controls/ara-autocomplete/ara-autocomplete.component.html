@@ -1,0 +1,79 @@
+<div class="flex items-center text-md text-hint" *ngIf="label && !labelForm">
+  {{ label }}<span *ngIf="required" class="required"></span>
+</div>
+<mat-form-field
+  class="w-full form-control"
+  [ngClass]="{
+    'fuse-mat-dense fuse-mat-rounded': isFuseStyle,
+    'no-hint': isRemoveHint,
+    'highlight-form': isHighlight && !inputAutoComplete.value
+  }">
+  <mat-label *ngIf="labelForm">{{ label }}</mat-label>
+  <input
+    type="text"
+    [ngClass]="{ 'highlight-input': isHighlight }"
+    [placeholder]="displayPlaceholder()"
+    aria-label="Autocomplete"
+    matInput
+    trim
+    #inputAutoComplete
+    [disabled]="disabled"
+    (keydown)="inputChange($event)"
+    [matAutocomplete]="auto"
+    [formControl]="mainControl" />
+  <mat-autocomplete
+    #auto="matAutocomplete"
+    [panelWidth]="panelWidth"
+    [displayWith]="displayWith"
+    (optionSelected)="optionSelected($event)">
+    <mat-option *ngFor="let item of items" [value]="item">
+      <ng-template #defaultOptionTemplate>
+        <div class="leading-none" *ngIf="displayField.length > 1">
+          <p>{{ item[displayField[0]] }}</p>
+          <small
+            ><i>{{ item[displayField[1]] }}</i></small
+          >
+        </div>
+        <div class="leading-none" *ngIf="displayField.length === 1">
+          <p>{{ item[displayField[0]] }}</p>
+        </div>
+      </ng-template>
+      <ng-container
+        [ngTemplateOutlet]="dynamicOptionTemplate || defaultOptionTemplate"
+        [ngTemplateOutletContext]="{ $implicit: item }"></ng-container>
+    </mat-option>
+  </mat-autocomplete>
+  <button
+    type="button"
+    matTooltip="Làm mới dữ liệu"
+    *ngIf="!!refreshFn"
+    stop-propagation
+    matSuffix
+    mat-icon-button
+    [disabled]="disabled"
+    (click)="refreshFn()">
+    <mat-icon>refresh</mat-icon>
+  </button>
+  <button
+    class="btn-close"
+    type="button"
+    stop-propagation
+    *ngIf="inputAutoComplete.value"
+    matSuffix
+    mat-icon-button
+    [disabled]="disabled"
+    (click)="clear()">
+    <mat-icon>close</mat-icon>
+  </button>
+  <button
+    class="button-search"
+    type="button"
+    *ngIf="!!searchFn"
+    stop-propagation
+    matSuffix
+    mat-icon-button
+    [disabled]="disabled"
+    (click)="searchFn()">
+    <mat-icon>search</mat-icon>
+  </button>
+</mat-form-field>

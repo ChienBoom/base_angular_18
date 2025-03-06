@@ -1,0 +1,15 @@
+<div class="flex items-center text-md text-hint" *ngIf="label">{{ label }}</div>
+<mat-form-field class="w-full fuse-mat-dense fuse-mat-rounded">
+	<input
+		[placeholder]="placeholder"
+		trim
+		matInput
+		[matDatepicker]="picker"
+		[value]="value"
+		[matDatepickerFilter]="filterPicker"
+		[disabled]="disabled"
+		(dateChange)="handleDateChange($event)"
+	/>
+	<mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+	<mat-datepicker #picker></mat-datepicker>
+</mat-form-field>

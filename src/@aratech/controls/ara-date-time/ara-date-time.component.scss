@@ -1,0 +1,10 @@
+.formfield {
+	--mat-mdc-form-field-floating-label-scale: 0.75;
+	display: inline-flex;
+	flex-direction: column;
+	min-width: 0;
+	text-align: left;
+	opacity: 0.7 !important;
+	border-radius: 10px;
+	height: 40px;
+}

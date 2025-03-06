@@ -1,0 +1,75 @@
+/*
+    Table Color Global
+*/
+$hover-row-color: #f6faff;
+$header-color: #f4f7ff;
+$selected-color: #abd0fc;
+
+.table-container {
+	overflow-y: auto;
+	overflow-x: hidden;
+	height: calc(100vh - 270px); //
+}
+
+.detail-table-group {
+	width: 100%;
+
+	.mat-row,
+	.mat-cell {
+		height: auto;
+	}
+
+	.mat-mdc-row:hover .mat-mdc-cell {
+		background-color: $hover-row-color;
+	}
+
+	.mat-mdc-header-row .mat-mdc-header-cell {
+		background-color: $header-color;
+	}
+
+	.item-row {
+		cursor: pointer;
+		display: none;
+
+		&.visible-row {
+			display: flex;
+
+			.ng-trigger-groupExpand {
+				display: flex !important;
+				min-height: auto !important;
+				height: auto !important;
+			}
+		}
+	}
+
+	.group-row {
+		cursor: pointer;
+
+		.mat-cell {
+			font-weight: 300;
+		}
+	}
+}
+
+.detail-table {
+	width: 100%;
+
+	.mat-row,
+	.mat-cell {
+		height: auto;
+	}
+
+	.mat-mdc-row {
+		&.selected-row .mat-mdc-cell {
+			background-color: $selected-color;
+		}
+	}
+
+	.mat-mdc-row:hover .mat-mdc-cell {
+		background-color: $hover-row-color;
+	}
+
+	.mat-mdc-header-row .mat-mdc-header-cell {
+		background-color: $header-color;
+	}
+}

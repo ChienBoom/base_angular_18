@@ -1,0 +1,5 @@
+<mat-form-field class="w-full fuse-mat-dense fuse-mat-rounded">
+	<input matInput trim #dateTimeInput type="datetime-local" (change)="onChangeValue($event)" />
+	<mat-icon matSuffix (click)="openDateTimePicker(dateTimeInput)">schedule</mat-icon>
+</mat-form-field>
+

@@ -1,0 +1,75 @@
+<div class="flex items-center text-md text-hint" *ngIf="label && !labelForm">
+  {{ label }}
+</div>
+<mat-form-field
+  class="w-full"
+  appearance="fill"
+  [ngClass]="{
+    'fuse-mat-dense fuse-mat-rounded': isFuseStyle,
+    'no-hint': !isHint
+  }">
+  <mat-label *ngIf="labelForm">{{ label }}</mat-label>
+  <div class="w-full py-2">
+    <input
+      trim
+      [placeholder]="displayPlaceholder()"
+      #refInputSearch
+      [disabled]="disabled"
+      [formControl]="inputCtrl"
+      [matChipInputFor]="chipGrid"
+      [matAutocomplete]="auto"
+      (matChipInputTokenEnd)="add($event)" />
+    <div class="w-full flex justify-between gap-2">
+      <mat-chip-grid
+        #chipGrid
+        [disabled]="disabled"
+        (change)="handleChipsChange($event)">
+        <mat-chip-row *ngFor="let item of chips" (removed)="remove(item)">
+          <ng-container
+            [ngTemplateOutlet]="dynamicChipTemplate || defaultOptionTemplate"
+            [ngTemplateOutletContext]="{ $implicit: item }"></ng-container>
+
+          <button matChipRemove [attr.aria-label]="'remove ' + item.id">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip-row>
+      </mat-chip-grid>
+      <button
+        type="button"
+        *ngIf="isDelBtn"
+        stop-propagation
+        matSuffix
+        mat-icon-button
+        [disabled]="disabled || chips.length <= 0"
+        (click)="onClearChips()">
+        <mat-icon class="text-black">clear</mat-icon>
+      </button>
+    </div>
+  </div>
+  <mat-autocomplete
+    #auto="matAutocomplete"
+    [panelWidth]="panelWidth"
+    [displayWith]="displayWith"
+    (optionSelected)="optionSelected($event)">
+    <mat-option
+      *ngFor="let item of filteredItems | async"
+      [value]="item"
+      [disabled]="getDisable(item[valueField])">
+      <ng-container
+        [ngTemplateOutlet]="dynamicOptionTemplate || defaultOptionTemplate"
+        [ngTemplateOutletContext]="{ $implicit: item }"></ng-container>
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
+
+<ng-template #defaultOptionTemplate let-item>
+  <div class="leading-none" *ngIf="displayField.length > 1">
+    <p>{{ item[displayField[0]] }}</p>
+    <small
+      ><i>{{ item[displayField[1]] }}</i></small
+    >
+  </div>
+  <div class="leading-none" *ngIf="displayField.length === 1">
+    <p>{{ item[displayField[0]] }}</p>
+  </div>
+</ng-template>

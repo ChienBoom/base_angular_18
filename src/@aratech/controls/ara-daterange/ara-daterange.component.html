@@ -1,0 +1,41 @@
+<mat-form-field
+  class="fuse-mat-dense fuse-mat-rounded w-full text-input"
+  [subscriptSizing]="'dynamic'">
+  <mat-label *ngIf="label != ''">{{ label | translate }}</mat-label>
+  <mat-date-range-input
+  [required]="required"
+    [formGroup]="defaultFormGroup"
+    [rangePicker]="rangePicker"
+    [disabled]="disable"
+    [dateFilter]="filterPicker"
+    [comparisonStart]="defaultFormGroup.value.start"
+    [comparisonEnd]="defaultFormGroup.value.end">
+    <input
+      matStartDate
+      formControlName="start"
+      placeholder="Từ ngày"
+      (keyup.enter)="handleOnChange()" />
+    <input
+      matEndDate
+      formControlName="end"
+      placeholder="Đến ngày"
+      (keyup.enter)="handleOnChange()"
+      (dateChange)="handleOnChange()" />
+  </mat-date-range-input>
+  <mat-datepicker-toggle
+    matIconSuffix
+    [for]="rangePicker"></mat-datepicker-toggle>
+  <mat-date-range-picker #rangePicker></mat-date-range-picker>
+</mat-form-field>
+<mat-error *ngIf="getStartDate.hasError('matStartDateInvalid')">
+  Ngày bắt đầu <= Ngày kết thúc
+</mat-error>
+<mat-error *ngIf="getEndDate.hasError('matEndDateInvalid')">
+  Ngày kết thúc >= Ngày bắt đầu
+</mat-error>
+<mat-error
+  *ngIf="
+    getStartDate.hasError('dateCheck') || getEndDate.hasError('dateCheck')
+  ">
+  Vui lòng chọn hoặc nhập đúng định dạng !
+</mat-error>

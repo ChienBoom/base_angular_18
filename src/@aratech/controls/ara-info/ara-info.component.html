@@ -1,0 +1,50 @@
+<div class="w-full" fxLayout="row" fxLayoutAlign="start center">
+  <span class="pr-12 label" fxLayoutAlign="end center">{{
+    label
+  }}</span>
+  <mat-form-field
+    *ngIf="dataType == types.text"
+    class="w-60-p sm-control"
+    appearance="outline">
+    <input matInput [(ngModel)]="value" readonly />
+  </mat-form-field>
+
+  <mat-form-field
+    *ngIf="dataType == types.number"
+    class="w-60-p sm-control"
+    appearance="outline">
+    <input
+      matInput
+      type="text"
+      [ngModel]="value | number"
+      (ngModelChange)="value = $event"
+      readonly />
+  </mat-form-field>
+
+  <mat-form-field
+    *ngIf="dataType == types.date"
+    class="w-60-p sm-control"
+    appearance="outline">
+    <input
+      matInput
+      dateInput
+      [(ngModel)]="value"
+      [matDatepicker]="datePicker"
+      readonly />
+    <mat-datepicker #datePicker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field
+    *ngIf="dataType == types.textarea"
+    class="w-60-p sm-control"
+    appearance="outline">
+    <textarea
+      matInput
+      [(ngModel)]="value"
+      readonly
+      cdkTextareaAutosize
+      #autosize="cdkTextareaAutosize"
+      cdkAutosizeMinRows="3">
+    </textarea>
+  </mat-form-field>
+</div>

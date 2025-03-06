@@ -1,0 +1,28 @@
+/* ----------------------------------------------------------------------------------------------------- */
+/*  @ Import/write your custom styles here.
+/*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
+/* ----------------------------------------------------------------------------------------------------- */
+:root {
+  --formfield-bg-light: #ffffff;
+  --formfield-text-light: #000000;
+  --formfield-bg-dark: #2b2b2b;
+  --formfield-text-dark: #ffffff;
+}
+
+.light {
+  --formfield-bg: var(--formfield-bg-light);
+  --formfield-text: var(--formfield-text-light);
+}
+
+.dark {
+  --formfield-bg: var(--formfield-bg-dark);
+  --formfield-text: var(--formfield-text-dark);
+}
+
+.required-color {
+    color: #dc2626;
+}
+.formfield-block{
+    display: block;
+    height: 21px;
+}

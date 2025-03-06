@@ -1,0 +1,49 @@
+<mat-form-field
+  class="w-full"
+  appearance="fill"
+  [ngClass]="{ 'no-hint': !isHint }">
+  <mat-chip-grid
+    #chipGrid
+    (change)="onChipsChange($event)"
+    [disabled]="disabled">
+    <mat-chip-row
+      [disabled]="disabled"
+      *ngFor="let chip of chips"
+      (removed)="remove(chip)"
+      [editable]="true"
+      (edited)="edit(chip, $event)">
+      {{ chip }}
+      <button matChipRemove [disabled]="disabled">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </mat-chip-row>
+    <input
+      trim
+      [disabled]="disabled"
+      [matChipInputFor]="chipGrid"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      [matChipInputAddOnBlur]="addOnBlur"
+      (matChipInputTokenEnd)="add($event)"
+      (paste)="paste($event)" />
+    <button
+      type="button"
+      *ngIf="isCopyBtn"
+      stop-propagation
+      matSuffix
+      mat-icon-button
+      [disabled]="disabled || chips.length <= 0"
+      [cdkCopyToClipboard]="chips?.join(',')">
+      <mat-icon class="text-black">file_copy</mat-icon>
+    </button>
+    <button
+      type="button"
+      *ngIf="isDelBtn"
+      stop-propagation
+      matSuffix
+      mat-icon-button
+      [disabled]="disabled || chips.length <= 0"
+      (click)="onClearChips()">
+      <mat-icon class="text-black">clear</mat-icon>
+    </button>
+  </mat-chip-grid>
+</mat-form-field>

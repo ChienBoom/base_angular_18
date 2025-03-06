@@ -1,0 +1,44 @@
+<form class="w-full" [formGroup]="stateForm">
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label *ngIf="label">{{ label | translate }}</mat-label>
+    <input
+      type="text"
+      class="w-full"
+      matInput
+      #inputAutoComplete
+      formControlName="stateGroup"
+      [required]="required"
+      [matAutocomplete]="autoGroup"
+      [(ngModel)]="selectedItem"
+      [disabled]="disable"
+      (input)="onInputChange($event.target.value)" />
+    <mat-autocomplete
+      #autoGroup="matAutocomplete"
+      [displayWith]="displayFn"
+      class="w-full"
+      (optionSelected)="optionSelected($event)">
+      <mat-optgroup
+        *ngFor="let group of stateGroupOptions"
+        [label]="group.groupName">
+        <mat-option *ngFor="let item of group.items" [value]="item">
+          {{ item[displayField] }}
+          <p class="muted-text">{{ item[displayField2] }}</p>
+        </mat-option>
+      </mat-optgroup>
+    </mat-autocomplete>
+    <button
+      class="btn-close"
+      stop-propagation
+      *ngIf="inputAutoComplete.value"
+      matSuffix
+      mat-icon-button
+      (click)="clear()">
+      <mat-icon>close</mat-icon>
+    </button>
+    <mat-error *ngIf="errors.required">
+      <span>{{
+        'Category.Msg.Required' | translate | stringFormat : label
+      }}</span>
+    </mat-error>
+  </mat-form-field>
+</form>

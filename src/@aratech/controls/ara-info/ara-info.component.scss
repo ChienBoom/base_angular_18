@@ -1,0 +1,35 @@
+:host {
+  .sm-control {
+    ::ng-deep {
+      .mat-form-field-underline {
+        bottom: 2px;
+      }
+
+      .mat-form-field-wrapper {
+        padding-bottom: 2px;
+      }
+
+      .mat-form-field-label-wrapper {
+        top: 0;
+        padding-top: 0;
+      }
+
+      .mat-form-field-infix {
+        border-top: none;
+        padding: 1.1em 0 0.5em 0;
+      }
+    }
+
+    &.mat-form-field-hide-placeholder {
+      ::ng-deep {
+        .mat-form-field-empty {
+          top: 1.3em;
+        }
+      }
+    }
+  }
+
+  .fs-14 {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,8 @@
+<mat-label
+    >{{ label
+    }}<span *ngIf="required" class="required-color">*</span></mat-label
+>
+<mat-form-field appearance="outline" class="w-full">
+    <input [type]="type" [value]="selectedValue" matInput [placeholder]="placeholder" [disabled]="disabled" (input)="handleInputChange($event)"/>
+     <mat-icon matSuffix *ngIf="isUseClear && selectedValue !== ''" (click)="handleClearValue()">close</mat-icon>
+</mat-form-field>
