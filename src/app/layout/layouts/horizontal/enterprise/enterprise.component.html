@@ -30,11 +30,11 @@
 >
     <!-- Header -->
     <div
-        class="relative z-49 flex h-16 w-full flex-0 flex-col justify-center overflow-hidden shadow dark:shadow-none sm:h-20 md:h-36 print:hidden"
+        class="relative z-49 flex h-16 w-full flex-0 flex-col justify-center overflow-hidden shadow sm:h-20 md:h-36 dark:shadow-none print:hidden"
     >
         <!-- Top bar -->
         <div
-            class="dark relative flex w-full flex-auto justify-center bg-gray-800 px-4 dark:bg-gray-900 md:px-8"
+            class="dark relative flex w-full flex-auto justify-center bg-gray-800 px-4 md:px-8 dark:bg-gray-900"
         >
             <div class="flex h-16 w-full max-w-360 items-center sm:h-20">
                 <!-- Logo -->
@@ -64,14 +64,19 @@
                 >
                     <languages></languages>
                     <fuse-fullscreen class="hidden md:block"></fuse-fullscreen>
-                    <search [appearance]="'bar'"></search>
+                    <!-- <search [appearance]="'bar'"></search>
                     <shortcuts></shortcuts>
                     <messages></messages>
-                    <notifications></notifications>
+                    <notifications></notifications> -->
+                    <search [appearance]="'bar'" *ngIf="isUseSearchs"></search>
+                    <shortcuts *ngIf="isUseShortcuts"></shortcuts>
+                    <messages *ngIf="isUseMessages"></messages>
+                    <notifications *ngIf="isUseNotifications"></notifications>
                     <button
                         class="lg:hidden"
                         mat-icon-button
                         (click)="quickChat.toggle()"
+                        *ngIf="isUseChats"
                     >
                         <mat-icon
                             [svgIcon]="
@@ -86,7 +91,7 @@
         <!-- Bottom bar -->
         @if (!isScreenSmall) {
             <div
-                class="bg-card flex flex-auto justify-center px-4 dark:bg-gray-700 md:px-8"
+                class="bg-card flex flex-auto justify-center px-4 md:px-8 dark:bg-gray-700"
             >
                 <div class="relative flex h-16 w-full max-w-360 items-center">
                     <fuse-horizontal-navigation
@@ -125,4 +130,4 @@
 </div>
 
 <!-- Quick chat -->
-<quick-chat #quickChat="quickChat"></quick-chat>
+<quick-chat #quickChat="quickChat" *ngIf="isUseChats"></quick-chat>

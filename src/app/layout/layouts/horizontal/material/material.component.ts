@@ -1,7 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
+import { AppConfig, ConfigService } from '@aratech/services/config.service';
 import { FuseFullscreenComponent } from '@fuse/components/fullscreen';
 import { FuseLoadingBarComponent } from '@fuse/components/loading-bar';
 import {
@@ -38,12 +40,19 @@ import { Subject, takeUntil } from 'rxjs';
         UserComponent,
         FuseHorizontalNavigationComponent,
         RouterOutlet,
+        CommonModule,
     ],
 })
 export class MaterialLayoutComponent implements OnInit, OnDestroy {
     isScreenSmall: boolean;
     navigation: Navigation;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+    isUseShortcuts: boolean = true;
+    isUseSearchs: boolean = true;
+    isUseMessages: boolean = true;
+    isUseNotifications: boolean = true;
+    isUseChats: boolean = true;
+    config: AppConfig;
 
     /**
      * Constructor
@@ -53,7 +62,8 @@ export class MaterialLayoutComponent implements OnInit, OnDestroy {
         private _router: Router,
         private _navigationService: NavigationService,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
-        private _fuseNavigationService: FuseNavigationService
+        private _fuseNavigationService: FuseNavigationService,
+        private _configService: ConfigService
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -89,6 +99,12 @@ export class MaterialLayoutComponent implements OnInit, OnDestroy {
                 // Check if the screen is small
                 this.isScreenSmall = !matchingAliases.includes('md');
             });
+        this.config = this._configService.getConfig();
+        this.isUseSearchs = this.config?.enableSearchs;
+        this.isUseMessages = this.config?.enableMessages;
+        this.isUseNotifications = this.config?.enableNotifications;
+        this.isUseChats = this.config?.enableChats;
+        this.isUseShortcuts = this.config?.enableShortcuts;
     }
 
     /**

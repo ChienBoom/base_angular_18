@@ -1,4 +1,7 @@
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+    provideHttpClient,
+    withInterceptorsFromDi,
+} from '@angular/common/http';
 import {
     APP_INITIALIZER,
     ApplicationConfig,
@@ -10,22 +13,36 @@ import { LuxonDateAdapter } from '@angular/material-luxon-adapter';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
+import { ConfigService } from '@aratech/services/config.service';
 import { provideFuse } from '@fuse';
 import { TranslocoService, provideTransloco } from '@jsverse/transloco';
+import { provideOAuthClient } from 'angular-oauth2-oidc';
 import { appRoutes } from 'app/app.routes';
 import { provideAuth } from 'app/core/auth/auth.provider';
 import { provideIcons } from 'app/core/icons/icons.provider';
 import { MockApiService } from 'app/mock-api';
 import { firstValueFrom } from 'rxjs';
+import { StatehandlerServiceImpl } from './core/auth/services/statehandler.service';
 import { TranslocoHttpLoader } from './core/transloco/transloco.http-loader';
-import { provideOAuthClient } from 'angular-oauth2-oidc';
-import { StatehandlerService, StatehandlerServiceImpl } from './core/auth/services/statehandler.service';
 
 const stateHandlerFn = (stateHandler: StatehandlerServiceImpl) => {
     return () => {
         return stateHandler.initStateHandler();
     };
 };
+export function initializeApp(configService: ConfigService) {
+    // return () =>
+    //     configService
+    //         .loadConfig()
+    //         .toPromise()
+    //         .then((config) => {
+    //             configService.setConfig(config);
+    //         });
+    return () =>
+        firstValueFrom(configService.loadConfig()).then((config) =>
+            configService.setConfig(config)
+        );
+}
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -84,9 +101,14 @@ export const appConfig: ApplicationConfig = {
             const translocoService = inject(TranslocoService);
             const defaultLang = translocoService.getDefaultLang();
             translocoService.setActiveLang(defaultLang);
-
             return firstValueFrom(translocoService.load(defaultLang));
         }),
+        {
+            provide: APP_INITIALIZER,
+            useFactory: initializeApp,
+            deps: [ConfigService],
+            multi: true,
+        },
 
         // Fuse
         provideAuth(),

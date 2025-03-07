@@ -9,6 +9,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { AraAutocompleteComponent } from '@aratech/controls/ara-autocomplete/ara-autocomplete.component';
 import { AraInputTextComponent } from '@aratech/controls/ara-input-text/ara-input-text.component';
+import { ConfigService } from '@aratech/services/config.service';
 import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
@@ -42,10 +43,11 @@ export class ExampleComponent {
     myForm: FormGroup;
     value: string = 'option 1';
 
-    constructor(private fb: FormBuilder) {
+    constructor(private fb: FormBuilder, private configService: ConfigService) {
         this.myForm = this.fb.group({
             search2: ['option 1', Validators.required],
         });
+        console.log("config: ", this.configService.getConfig())
     }
 
     getErrorMessage(controlName: string): string | null {

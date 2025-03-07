@@ -3,9 +3,7 @@
     [class.lg:right-0]="
         config.layout === 'centered' || config.layout === 'material'
     "
-    [class.lg:right-16]="
-        config.layout !== 'centered' && config.layout !== 'material'
-    "
+    [class.lg:right-16]="isUseChats"
     style="top: 275px"
     (click)="settingsDrawer.toggle()"
 >

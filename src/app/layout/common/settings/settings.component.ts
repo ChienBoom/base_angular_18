@@ -1,9 +1,16 @@
 import { NgClass } from '@angular/common';
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+    ChangeDetectorRef,
+    Component,
+    OnDestroy,
+    OnInit,
+    ViewEncapsulation,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
+import { AppConfig, ConfigService } from '@aratech/services/config.service';
 import { FuseDrawerComponent } from '@fuse/components/drawer';
 import {
     FuseConfig,
@@ -50,6 +57,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
     theme: string;
     themes: Themes;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+    isUseChats: boolean = true;
+    appconfig: AppConfig;
 
     /**
      * Constructor
@@ -57,7 +66,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
     constructor(
         private _router: Router,
         private _fuseConfigService: FuseConfigService,
-        private cdr: ChangeDetectorRef
+        private cdr: ChangeDetectorRef,
+        private _configService: ConfigService
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -83,6 +93,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this.config.layout = layout;
         this._fuseConfigService.config = { scheme };
         this.cdr.detectChanges();
+        this.appconfig = this._configService.getConfig();
+        this.isUseChats = this.appconfig?.enableChats
     }
 
     /**

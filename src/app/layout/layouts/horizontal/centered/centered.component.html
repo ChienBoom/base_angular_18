@@ -76,10 +76,14 @@
             <div class="ml-auto flex items-center space-x-1 pl-2 sm:space-x-2">
                 <languages></languages>
                 <fuse-fullscreen class="hidden md:block"></fuse-fullscreen>
-                <search [appearance]="'bar'"></search>
+                <!-- <search [appearance]="'bar'"></search>
                 <shortcuts></shortcuts>
                 <messages></messages>
-                <notifications></notifications>
+                <notifications></notifications> -->
+                <search [appearance]="'bar'" *ngIf="isUseSearchs"></search>
+                <shortcuts *ngIf="isUseShortcuts"></shortcuts>
+                <messages *ngIf="isUseMessages"></messages>
+                <notifications *ngIf="isUseNotifications"></notifications>
                 <user></user>
             </div>
         </div>

@@ -1,31 +1,19 @@
 :host ::ng-deep {
-    .mat-mdc-text-field-wrapper {
-        background-color: var(--formfield-bg);
-    }
-    // .mat-mdc-form-field-flex {
-    //     height: 46px;
-    // }
-    // .mat-mdc-form-field-infix {
-    //     padding-top: 8px !important;
-    //     padding-bottom: 8px !important;
-    // }
-    // .mat-mdc-form-field-subscript-wrapper {
-    //     display: none !important;
-    // }
-    .mat-mdc-text-field-wrapper{
+    .mat-mdc-form-field .mat-mdc-text-field-wrapper {
+        background-color: var(--formfield-bg) !important;
         border-radius: 5px !important;
     }
 }
-.no-hint {
-  margin-bottom: -1.27em;
-}
-
 .highlight-form {
   ::ng-deep {
     .mat-mdc-text-field-wrapper {
       border: 1px solid red !important;
     }
   }
+}
+
+.no-hint {
+  margin-bottom: -1.27em;
 }
 
 .highlight-input::placeholder {

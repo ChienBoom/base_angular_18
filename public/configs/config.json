@@ -1,0 +1,8 @@
+{
+    "useSSO": true,
+    "enableMessages": false,
+    "enableChats": false,
+    "enableShortcuts": false,
+    "enableNotifications": false,
+    "enableSearchs": false
+}
